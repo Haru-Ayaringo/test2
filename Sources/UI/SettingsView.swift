@@ -28,6 +28,12 @@ struct SettingsView: View {
                         }
                     }
                 }
+
+                Section("ヘルプ") {
+                    NavigationLink("用語解説一覧") {
+                        GlossaryListView()
+                    }
+                }
             }
             .navigationTitle("Settings")
         }

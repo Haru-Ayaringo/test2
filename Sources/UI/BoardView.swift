@@ -63,24 +63,7 @@ struct BoardView: View {
     }
 
     private var legendCard: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("凡例")
-                .font(.headline)
-
-            ForEach(Marker.allCases, id: \.rawValue) { marker in
-                HStack {
-                    Text(marker.shortLabel)
-                        .font(.caption.bold())
-                        .frame(width: 28, height: 24)
-                        .background(Color.accentColor.opacity(0.15), in: RoundedRectangle(cornerRadius: 6))
-                    Text(marker.title)
-                        .font(.subheadline)
-                }
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
+        LegendCardView(markers: Marker.allCases)
     }
 }
 

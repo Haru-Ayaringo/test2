@@ -30,22 +30,22 @@ enum Marker: String, CaseIterable, Codable {
 
     var shortLabel: String {
         switch self {
-        case .good: return "吉"
-        case .go: return "五"
-        case .an: return "暗"
-        case .hon: return "本"
-        case .teki: return "的"
-        case .ha: return "破"
+        case .good: return "(吉)"
+        case .go: return "(五)"
+        case .an: return "(暗)"
+        case .hon: return "(本)"
+        case .teki: return "(的)"
+        case .ha: return "(破)"
         }
     }
 
     var title: String {
         switch self {
         case .good: return "吉方"
-        case .go: return "五黄"
-        case .an: return "暗剣"
+        case .go: return "五黄殺"
+        case .an: return "暗剣殺"
         case .hon: return "本命殺"
-        case .teki: return "的殺"
+        case .teki: return "本命的殺"
         case .ha: return "歳破"
         }
     }

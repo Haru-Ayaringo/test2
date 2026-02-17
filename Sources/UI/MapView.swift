@@ -11,8 +11,7 @@ struct MapView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.08, longitudeDelta: 0.08)
     )
     @State private var isShowingLocationPicker = false
-    @State private var isLegendExpanded = true
-
+    
     private let engine: KyuseiEngine = StubKyuseiEngine()
 
     private var board: Board {
@@ -109,22 +108,7 @@ struct MapView: View {
             }
             .pickerStyle(.segmented)
 
-            DisclosureGroup("凡例", isExpanded: $isLegendExpanded) {
-                VStack(alignment: .leading, spacing: 6) {
-                    ForEach(Marker.allCases, id: \.rawValue) { marker in
-                        HStack {
-                            Text(marker.shortLabel)
-                                .font(.caption.bold())
-                                .frame(width: 24, height: 20)
-                                .background(Color.accentColor.opacity(0.2), in: RoundedRectangle(cornerRadius: 5))
-                            Text(marker.title)
-                                .font(.footnote)
-                            Spacer()
-                        }
-                    }
-                }
-                .padding(.top, 4)
-            }
+            LegendCardView(markers: Marker.allCases, isCollapsible: true)
         }
         .padding(10)
         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))

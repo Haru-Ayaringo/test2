@@ -69,3 +69,13 @@
   - 「現在地へ」「地点を選ぶ」導線
 - `LocationPickerSheet` で手動地点を選択して `selectedLocation` に保存
 - 位置情報未許可時も `selectedLocation` ベースで動作
+
+## 9. 用語解説（Task F）
+
+- `Resources/glossary.json` を同梱し、用語をオフライン参照
+- `GlossaryRepository` がBundleからJSONを読み込み、`allTerms` と `term(for: shortLabel)` を提供
+- `Settings` の「用語解説一覧」から `GlossaryListView` を開ける
+- `Board/Map` の `LegendCardView` で略号タップ時にBottomSheet（`GlossaryTermSheet`）を表示
+- 凡例の `i` ボタンから一覧へ遷移可能
+
+> Xcodeに取り込む際は `Resources/glossary.json` をターゲットに追加してください。
