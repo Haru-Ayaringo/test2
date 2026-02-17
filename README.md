@@ -90,3 +90,22 @@
   - 期待値未投入時は `XCTSkip` でスキップ
   - 将来、既存アプリの正解盤を投入して回帰検知に利用
 - Debugビルドでは Board画面に「現在のBoardをJSONでコピー」ボタンを表示
+
+## 11. UI品質・アクセシビリティ（Task H）
+
+### 現状できること
+- Dynamic Typeを考慮して、主要な日付/プロフィールボタンは縮小表示で崩れにくいよう調整
+- BoardセルにVoiceOverラベル（方位/星/マーカー）を付与
+- Home/Map/Boardでプロフィール未登録時の空状態ガイドを表示
+- Mapで位置情報が未許可の場合、手動地点設定を促すガイドを表示
+- Settingsに注意書き（流派差・位置誤差）を配置
+
+### 九星ロジックを入れる場所
+- `Sources/Domain/KyuseiEngine.swift` の `KyuseiEngine` を実装
+- 既存の `Sources/Data/StubKyuseiEngine.swift` を本実装へ差し替え、`AppStore(engine:)` DIで注入
+- 回帰確認は `Tests/KyuseiGoldenTests.swift` と `Tests/Resources/Golden/golden_cases.json` を利用
+
+### glossary.json の編集方法
+1. `Resources/glossary.json` の各項目（`key`, `shortLabel`, `title`, `description`）を編集
+2. Xcodeで対象ターゲットに `Resources/glossary.json` が含まれていることを確認
+3. アプリ再起動で `GlossaryRepository` が再読込し、一覧と凡例シート表示に反映

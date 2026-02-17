@@ -11,6 +11,16 @@ struct HomeView: View {
                     ProfilePickerButton()
                 }
 
+                if store.profiles.isEmpty {
+                    Section {
+                        InfoCardView(
+                            title: "プロフィール未登録",
+                            message: "Settingsタブで生年月日プロフィールを追加すると、盤の表示と判定が有効になります。",
+                            systemImage: "person.crop.circle.badge.plus"
+                        )
+                    }
+                }
+
                 Section("今日の要約") {
                     Text("選択日: \(store.selectedDate.formatted(date: .abbreviated, time: .omitted))")
                     Text("盤種: \(store.selectedBoardType.title)")

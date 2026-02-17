@@ -13,12 +13,16 @@ struct ProfilePickerButton: View {
                 Text(selectedProfileText)
                     .font(.subheadline)
                     .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
                 Image(systemName: "chevron.up.chevron.down")
                     .font(.caption)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .buttonStyle(.bordered)
+        .accessibilityLabel("プロフィール切替")
+        .accessibilityValue(selectedProfileText)
         .confirmationDialog("プロフィール切替", isPresented: $isShowingProfilePicker, titleVisibility: .visible) {
             if store.profiles.isEmpty {
                 Button("プロフィールがありません", role: .cancel) {}

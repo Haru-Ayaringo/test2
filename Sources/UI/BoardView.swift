@@ -24,12 +24,21 @@ struct BoardView: View {
                     DateBarView()
                     ProfilePickerButton()
 
+                    if store.profiles.isEmpty {
+                        InfoCardView(
+                            title: "プロフィール未登録",
+                            message: "Settingsタブでプロフィールを追加すると、プロフィール連動の盤検証が可能になります。",
+                            systemImage: "person.crop.circle.badge.plus"
+                        )
+                    }
+
                     Picker("盤種", selection: $store.selectedBoardType) {
                         ForEach(BoardType.allCases) { type in
                             Text(type.title).tag(type)
                         }
                     }
                     .pickerStyle(.segmented)
+                    .accessibilityLabel("盤種")
 
                     BoardCanvasView(board: board, selectedCellPosition: $selectedCellPosition)
 
@@ -70,6 +79,7 @@ struct BoardView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .background(Color(.secondarySystemBackground), in: RoundedRectangle(cornerRadius: 12))
+        .accessibilityElement(children: .combine)
     }
 
     private var legendCard: some View {
@@ -83,6 +93,7 @@ struct BoardView: View {
         } label: {
             Label("デバッグ: 現在のBoardをJSONでコピー", systemImage: "doc.on.doc")
                 .frame(maxWidth: .infinity)
+                .lineLimit(2)
         }
         .buttonStyle(.borderedProminent)
     }

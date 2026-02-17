@@ -38,6 +38,9 @@ struct BoardCanvasView: View {
                     }
                 }
                 .buttonStyle(.plain)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel(accessibilityLabel(for: cell))
+                .accessibilityHint("ダブルタップでこのセルを選択")
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 12))
@@ -45,6 +48,13 @@ struct BoardCanvasView: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(Color.secondary.opacity(0.25), lineWidth: 1)
         }
+    }
+
+    private func accessibilityLabel(for cell: BoardCell) -> String {
+        let markerText = cell.markers.isEmpty
+            ? "マーカーなし"
+            : cell.markers.map(\.title).joined(separator: "、")
+        return "方位 \(cell.position.shortLabel)、星 \(cell.starNumber)、\(markerText)"
     }
 }
 

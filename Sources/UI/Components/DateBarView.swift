@@ -27,6 +27,7 @@ struct DateBarView: View {
             } label: {
                 Image(systemName: "chevron.left")
             }
+            .accessibilityLabel("前日へ")
 
             Button {
                 isShowingDatePicker = true
@@ -34,20 +35,26 @@ struct DateBarView: View {
                 Text(store.selectedDate.formatted(Date.FormatStyle().year().month(.twoDigits).day(.twoDigits)))
                     .font(.subheadline.weight(.semibold))
                     .monospacedDigit()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.8)
                     .frame(maxWidth: .infinity)
             }
+            .accessibilityLabel("選択日 \(store.selectedDate.formatted(date: .complete, time: .omitted))")
+            .accessibilityHint("ダブルタップで日付選択")
 
             Button {
                 moveDate(by: 1)
             } label: {
                 Image(systemName: "chevron.right")
             }
+            .accessibilityLabel("翌日へ")
 
             Button {
                 isShowingDatePicker = true
             } label: {
                 Image(systemName: "calendar")
             }
+            .accessibilityLabel("カレンダーを開く")
         }
         .buttonStyle(.bordered)
         .sheet(isPresented: $isShowingDatePicker) {
