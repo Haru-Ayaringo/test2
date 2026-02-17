@@ -47,3 +47,13 @@
 - `DateBarView` (`Sources/UI/Components`): 前日/翌日ボタン、日付表示、カレンダー起動、1900-01-01〜2100-12-31クランプ
 - `ProfilePickerButton` (`Sources/UI/Components`): 選択中プロフィール表示とボトムシート式のプロフィール切替
 - `Home / Map / Board` で同一コンポーネントを利用し、`selectedDate` / `selectedProfileId` を共通同期
+
+## 7. 盤UI（Task D）
+
+- `Board` / `BoardCell` / `BoardPosition` / `Marker` を `Domain` に追加
+- `KyuseiEngine` プロトコルと `StubKyuseiEngine` を追加し、後続Taskでロジック差し替えしやすい構成
+- `BoardView` に以下を実装
+  - 盤種切替（年/月/日のSegmentedControl）
+  - 3x3の `BoardCanvasView`（セル選択ハイライト対応）
+  - 選択セルの詳細カード
+  - 凡例カード（静的表示）
