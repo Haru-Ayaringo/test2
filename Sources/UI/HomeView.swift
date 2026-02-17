@@ -6,6 +6,11 @@ struct HomeView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    DateBarView()
+                    ProfilePickerButton()
+                }
+
                 Section("今日の要約") {
                     Text("選択日: \(store.selectedDate.formatted(date: .abbreviated, time: .omitted))")
                     Text("盤種: \(store.selectedBoardType.title)")

@@ -41,3 +41,9 @@
 3. **Homeタブ強化**: 当日サマリ・吉方位/凶方位の表示
 4. **Settings拡張**: 表示テーマ、単位、通知、データバックアップ
 5. **Data層強化**: Repositoryのテスト追加、将来的な永続化方式切り替え
+
+## 6. 共通コンポーネント（Task C）
+
+- `DateBarView` (`Sources/UI/Components`): 前日/翌日ボタン、日付表示、カレンダー起動、1900-01-01〜2100-12-31クランプ
+- `ProfilePickerButton` (`Sources/UI/Components`): 選択中プロフィール表示とボトムシート式のプロフィール切替
+- `Home / Map / Board` で同一コンポーネントを利用し、`selectedDate` / `selectedProfileId` を共通同期
