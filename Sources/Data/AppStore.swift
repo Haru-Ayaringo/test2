@@ -1,4 +1,5 @@
 import Foundation
+import CoreLocation
 
 @MainActor
 final class AppStore: ObservableObject {
@@ -23,6 +24,7 @@ final class AppStore: ObservableObject {
     @Published var displaySettings: DisplaySettings {
         didSet { settingsRepository.saveDisplaySettings(displaySettings) }
     }
+    @Published var currentCoordinate: CLLocationCoordinate2D?
 
     private let profileRepository: ProfileRepository
     private let appStateRepository: AppStateRepository
@@ -51,6 +53,7 @@ final class AppStore: ObservableObject {
         self.selectedProfileId = loadedState?.selectedProfileId
         self.selectedLocation = loadedState?.selectedLocation ?? .tokyoStation
         self.displaySettings = loadedSettings ?? .default
+        self.currentCoordinate = nil
 
         normalizeSelectedProfileIfNeeded()
         hasLoadedInitialState = true
@@ -86,6 +89,14 @@ final class AppStore: ObservableObject {
 
     func selectProfile(_ profile: Profile) {
         selectedProfileId = profile.id
+    }
+
+    func updateCurrentCoordinate(_ coordinate: CLLocationCoordinate2D?) {
+        currentCoordinate = coordinate
+    }
+
+    func updateSelectedLocation(_ location: AppLocation) {
+        selectedLocation = location
     }
 
     private func persistAppStateIfReady() {

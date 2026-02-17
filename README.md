@@ -57,3 +57,15 @@
   - 3x3の `BoardCanvasView`（セル選択ハイライト対応）
   - 選択セルの詳細カード
   - 凡例カード（静的表示）
+
+## 8. 地図実装（Task E）
+
+- `LocationManager`（CoreLocationラッパ）を追加し、権限状態監視と現在地座標取得に対応
+- `MapView` を本実装化
+  - 上部: `ProfilePickerButton` + `DateBarView`
+  - 盤種切替（Segmented）
+  - `Map` + `BoardCanvasView` オーバーレイ（北を上に固定、回転なし）
+  - 透明度スライダー、地図スタイル切替、凡例表示
+  - 「現在地へ」「地点を選ぶ」導線
+- `LocationPickerSheet` で手動地点を選択して `selectedLocation` に保存
+- 位置情報未許可時も `selectedLocation` ベースで動作

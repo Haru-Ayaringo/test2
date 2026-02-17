@@ -4,7 +4,6 @@ struct DisplaySettings: Codable, Equatable {
     enum MapStyle: String, CaseIterable, Codable, Identifiable {
         case standard
         case hybrid
-        case imagery
 
         var id: String { rawValue }
 
@@ -14,8 +13,6 @@ struct DisplaySettings: Codable, Equatable {
                 return "標準"
             case .hybrid:
                 return "ハイブリッド"
-            case .imagery:
-                return "航空写真"
             }
         }
     }
