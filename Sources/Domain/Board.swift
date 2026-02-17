@@ -1,6 +1,6 @@
 import Foundation
 
-struct BoardCell: Identifiable, Equatable {
+struct BoardCell: Identifiable, Codable, Equatable {
     let position: BoardPosition
     var starNumber: Int
     var labels: [String]
@@ -9,7 +9,7 @@ struct BoardCell: Identifiable, Equatable {
     var id: BoardPosition { position }
 }
 
-struct Board: Equatable {
+struct Board: Codable, Equatable {
     var type: BoardType
     var cells: [BoardCell]
     var center: BoardCell
@@ -20,7 +20,7 @@ struct Board: Equatable {
     }
 }
 
-enum Marker: String, CaseIterable, Codable {
+enum Marker: String, CaseIterable, Codable, Hashable {
     case good
     case go
     case an
@@ -51,7 +51,7 @@ enum Marker: String, CaseIterable, Codable {
     }
 }
 
-enum BoardPosition: String, CaseIterable, Codable, Identifiable {
+enum BoardPosition: String, CaseIterable, Codable, Identifiable, Hashable {
     case northWest
     case north
     case northEast

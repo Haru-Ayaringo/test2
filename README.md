@@ -79,3 +79,14 @@
 - 凡例の `i` ボタンから一覧へ遷移可能
 
 > Xcodeに取り込む際は `Resources/glossary.json` をターゲットに追加してください。
+
+## 10. Engine抽象化とゴールデンテスト枠（Task G）
+
+- `KyuseiEngine` を `makeBoard(profile:date:type:)` 形式に統一
+- `AppStore` が `engine` をDI保持し、`currentBoard()` でUIへ供給
+- `BoardView` / `MapView` は `AppStore.currentBoard()` 経由で表示
+- `StubKyuseiEngine` は決定論的なダミー実装
+- `Tests/Resources/Golden/golden_cases.json` と `Tests/KyuseiGoldenTests.swift` を追加（ゴールデンテスト枠）
+  - 期待値未投入時は `XCTSkip` でスキップ
+  - 将来、既存アプリの正解盤を投入して回帰検知に利用
+- Debugビルドでは Board画面に「現在のBoardをJSONでコピー」ボタンを表示

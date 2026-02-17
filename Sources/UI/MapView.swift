@@ -12,15 +12,8 @@ struct MapView: View {
     )
     @State private var isShowingLocationPicker = false
     
-    private let engine: KyuseiEngine = StubKyuseiEngine()
-
     private var board: Board {
-        engine.generateBoard(
-            type: store.selectedBoardType,
-            date: store.selectedDate,
-            location: store.selectedLocation,
-            profile: store.selectedProfile
-        )
+        store.currentBoard()
     }
 
     var body: some View {

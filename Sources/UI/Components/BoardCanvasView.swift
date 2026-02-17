@@ -50,11 +50,10 @@ struct BoardCanvasView: View {
 
 #Preview {
     BoardCanvasView(
-        board: StubKyuseiEngine().generateBoard(
-            type: .day,
+        board: StubKyuseiEngine().makeBoard(
+            profile: Profile(name: "Preview", birthDate: .now),
             date: .now,
-            location: .tokyoStation,
-            profile: nil
+            type: .day
         ),
         selectedCellPosition: .constant(.center)
     )

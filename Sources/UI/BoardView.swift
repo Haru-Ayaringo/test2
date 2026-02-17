@@ -1,18 +1,16 @@
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#endif
 
 struct BoardView: View {
     @EnvironmentObject private var store: AppStore
 
     @State private var selectedCellPosition: BoardPosition = .center
-    private let engine: KyuseiEngine = StubKyuseiEngine()
+    @State private var debugMessage: String?
 
     private var board: Board {
-        engine.generateBoard(
-            type: store.selectedBoardType,
-            date: store.selectedDate,
-            location: store.selectedLocation,
-            profile: store.selectedProfile
-        )
+        store.currentBoard()
     }
 
     private var selectedCell: BoardCell {
@@ -37,12 +35,24 @@ struct BoardView: View {
 
                     detailCard
                     legendCard
+
+                    #if DEBUG
+                    debugCopyButton
+                    #endif
                 }
                 .padding()
             }
             .navigationTitle("Board")
             .onChange(of: store.selectedBoardType) { _ in
                 selectedCellPosition = .center
+            }
+            .alert("デバッグ", isPresented: Binding(
+                get: { debugMessage != nil },
+                set: { if !$0 { debugMessage = nil } }
+            )) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(debugMessage ?? "")
             }
         }
     }
@@ -65,6 +75,35 @@ struct BoardView: View {
     private var legendCard: some View {
         LegendCardView(markers: Marker.allCases)
     }
+
+    #if DEBUG
+    private var debugCopyButton: some View {
+        Button {
+            copyBoardJSON()
+        } label: {
+            Label("デバッグ: 現在のBoardをJSONでコピー", systemImage: "doc.on.doc")
+                .frame(maxWidth: .infinity)
+        }
+        .buttonStyle(.borderedProminent)
+    }
+
+    private func copyBoardJSON() {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        guard let data = try? encoder.encode(board),
+              let text = String(data: data, encoding: .utf8) else {
+            debugMessage = "JSON生成に失敗しました"
+            return
+        }
+
+        #if canImport(UIKit)
+        UIPasteboard.general.string = text
+        debugMessage = "現在のBoard JSONをクリップボードにコピーしました"
+        #else
+        debugMessage = text
+        #endif
+    }
+    #endif
 }
 
 #Preview {

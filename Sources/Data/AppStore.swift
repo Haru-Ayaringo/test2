@@ -26,6 +26,8 @@ final class AppStore: ObservableObject {
     }
     @Published var currentCoordinate: CLLocationCoordinate2D?
 
+    let engine: KyuseiEngine
+
     private let profileRepository: ProfileRepository
     private let appStateRepository: AppStateRepository
     private let settingsRepository: SettingsRepository
@@ -33,11 +35,13 @@ final class AppStore: ObservableObject {
     private var hasLoadedInitialState = false
 
     init(
+        engine: KyuseiEngine = StubKyuseiEngine(),
         profileRepository: ProfileRepository = ProfileRepository(),
         appStateRepository: AppStateRepository = AppStateRepository(),
         settingsRepository: SettingsRepository = SettingsRepository(),
         calendar: Calendar = .current
     ) {
+        self.engine = engine
         self.profileRepository = profileRepository
         self.appStateRepository = appStateRepository
         self.settingsRepository = settingsRepository
@@ -64,6 +68,14 @@ final class AppStore: ObservableObject {
     var selectedProfile: Profile? {
         guard let selectedProfileId else { return nil }
         return profiles.first(where: { $0.id == selectedProfileId })
+    }
+
+    var resolvedProfileForBoard: Profile {
+        selectedProfile ?? Profile(name: "デフォルト", birthDate: Date(timeIntervalSince1970: 0))
+    }
+
+    func currentBoard() -> Board {
+        engine.makeBoard(profile: resolvedProfileForBoard, date: selectedDate, type: selectedBoardType)
     }
 
     func addProfile(birthDate: Date, name: String = "") {

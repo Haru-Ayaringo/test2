@@ -1,10 +1,5 @@
 import Foundation
 
 protocol KyuseiEngine {
-    func generateBoard(
-        type: BoardType,
-        date: Date,
-        location: AppLocation,
-        profile: Profile?
-    ) -> Board
+    func makeBoard(profile: Profile, date: Date, type: BoardType) -> Board
 }
