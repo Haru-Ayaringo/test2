@@ -6,6 +6,17 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
+                ProfileListView()
+
+                Section("基本状態") {
+                    DatePicker("選択日", selection: $store.selectedDate, displayedComponents: .date)
+                    Picker("盤種", selection: $store.selectedBoardType) {
+                        ForEach(BoardType.allCases) { boardType in
+                            Text(boardType.title).tag(boardType)
+                        }
+                    }
+                }
+
                 Section("表示設定") {
                     Slider(value: $store.displaySettings.overlayOpacity, in: 0...1) {
                         Text("オーバーレイ不透明度")
@@ -16,11 +27,6 @@ struct SettingsView: View {
                             Text(style.title).tag(style)
                         }
                     }
-                }
-
-                Section("プレースホルダ") {
-                    Text("設定項目を順次追加予定")
-                        .foregroundStyle(.secondary)
                 }
             }
             .navigationTitle("Settings")
