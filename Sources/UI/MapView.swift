@@ -11,6 +11,7 @@ struct MapView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.08, longitudeDelta: 0.08)
     )
     @State private var isShowingLocationPicker = false
+    @State private var isShowingCurrentLocationUnavailableAlert = false
 
     private var board: Board {
         store.currentBoard()
@@ -82,6 +83,13 @@ struct MapView: View {
                         moveCameraToCurrentOrSelectedLocation()
                     }
                     .accessibilityHint("現在地が使えない場合は設定地点に移動")
+
+                    Button("現在地を地点に設定") {
+                        if !store.setSelectedLocationToCurrentCoordinate(name: "現在地") {
+                            isShowingCurrentLocationUnavailableAlert = true
+                        }
+                    }
+                    .accessibilityHint("現在地座標を地点として保存")
                 }
             }
             .onAppear {
@@ -105,6 +113,11 @@ struct MapView: View {
                         )
                     )
                 }
+            }
+            .alert("現在地が取得できません", isPresented: $isShowingCurrentLocationUnavailableAlert) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text("位置情報の許可を確認し、Map画面を開いた状態でしばらく待ってから再度お試しください。")
             }
         }
     }

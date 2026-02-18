@@ -32,6 +32,8 @@ final class AppStore: ObservableObject {
     private let appStateRepository: AppStateRepository
     private let settingsRepository: SettingsRepository
     private let calendar: Calendar
+    private let userDefaults: UserDefaults
+    private let initialLocationSeededKey = "initial_location_seeded_v1"
     private var hasLoadedInitialState = false
 
     init(
@@ -39,13 +41,15 @@ final class AppStore: ObservableObject {
         profileRepository: ProfileRepository = ProfileRepository(),
         appStateRepository: AppStateRepository = AppStateRepository(),
         settingsRepository: SettingsRepository = SettingsRepository(),
-        calendar: Calendar = .current
+        calendar: Calendar = .current,
+        userDefaults: UserDefaults = .standard
     ) {
         self.engine = engine
         self.profileRepository = profileRepository
         self.appStateRepository = appStateRepository
         self.settingsRepository = settingsRepository
         self.calendar = calendar
+        self.userDefaults = userDefaults
 
         let loadedProfiles = profileRepository.loadProfiles()
         let loadedState = appStateRepository.loadState()
@@ -105,10 +109,40 @@ final class AppStore: ObservableObject {
 
     func updateCurrentCoordinate(_ coordinate: CLLocationCoordinate2D?) {
         currentCoordinate = coordinate
+        if let coordinate {
+            seedSelectedLocationWithCurrentCoordinateIfNeeded(coordinate)
+        }
     }
 
     func updateSelectedLocation(_ location: AppLocation) {
+        userDefaults.set(true, forKey: initialLocationSeededKey)
         selectedLocation = location
+    }
+
+    func setSelectedLocationToCurrentCoordinate(name: String = "現在地") -> Bool {
+        guard let currentCoordinate else { return false }
+
+        updateSelectedLocation(
+            AppLocation(
+                latitude: currentCoordinate.latitude,
+                longitude: currentCoordinate.longitude,
+                name: name
+            )
+        )
+        return true
+    }
+
+    private func seedSelectedLocationWithCurrentCoordinateIfNeeded(_ coordinate: CLLocationCoordinate2D) {
+        let isSeeded = userDefaults.bool(forKey: initialLocationSeededKey)
+        guard !isSeeded else { return }
+        guard selectedLocation == .tokyoStation else { return }
+
+        selectedLocation = AppLocation(
+            latitude: coordinate.latitude,
+            longitude: coordinate.longitude,
+            name: "現在地"
+        )
+        userDefaults.set(true, forKey: initialLocationSeededKey)
     }
 
     private func persistAppStateIfReady() {
