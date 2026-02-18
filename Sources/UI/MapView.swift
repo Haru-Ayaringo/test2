@@ -148,7 +148,9 @@ struct MapView: View {
     }
 
     private func syncRegionToSelectedLocation(animated: Bool) {
-        let target = store.currentCoordinate ?? store.selectedLocation.coordinate
+        // 地図の自動同期は、ユーザーが選んだ手動地点を常に優先する。
+        // GPS現在地は「現在地へ」ボタン押下時のみ利用し、選択地点を上書きしない。
+        let target = store.selectedLocation.coordinate
         if animated {
             withAnimation {
                 region.center = target
