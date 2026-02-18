@@ -1,0 +1,68 @@
+[
+  {
+    "key": "yoshi",
+    "shortLabel": "(吉)",
+    "title": "吉方",
+    "description": "吉作用が期待できる方位の仮説明です。実装時に九星ロジックへ接続して詳細定義を差し替えてください。"
+  },
+  {
+    "key": "gohousatsu",
+    "shortLabel": "(五)",
+    "title": "五黄殺",
+    "description": "五黄殺の仮説明です。方位判定ルールと危険度表示は後続タスクで差し替え可能です。"
+  },
+  {
+    "key": "anken",
+    "shortLabel": "(暗)",
+    "title": "暗剣殺",
+    "description": "暗剣殺の仮説明です。盤種と日付による算出ロジックは今後実装されます。"
+  },
+  {
+    "key": "honmei",
+    "shortLabel": "(本)",
+    "title": "本命殺",
+    "description": "本命殺の仮説明です。プロフィール連動の本命星計算が接続される想定です。"
+  },
+  {
+    "key": "honmei_teki",
+    "shortLabel": "(的)",
+    "title": "本命的殺",
+    "description": "本命的殺の仮説明です。本命殺の対冲方位として扱う想定です。"
+  },
+  {
+    "key": "saiha",
+    "shortLabel": "(破)",
+    "title": "歳破",
+    "description": "歳破の仮説明です。年盤ベースの凶方位として扱う想定です。"
+  },
+  {
+    "key": "getsuha",
+    "shortLabel": "(月破)",
+    "title": "月破",
+    "description": "月破の仮説明です。月盤ベースで利用する用語です。"
+  },
+  {
+    "key": "nichiha",
+    "shortLabel": "(日破)",
+    "title": "日破",
+    "description": "日破の仮説明です。日盤ベースで利用する用語です。"
+  },
+  {
+    "key": "taisai",
+    "shortLabel": "(太)",
+    "title": "太歳",
+    "description": "太歳の仮説明です。年運解釈に関する定義を後で更新できます。"
+  },
+  {
+    "key": "gekken",
+    "shortLabel": "(月建)",
+    "title": "月建",
+    "description": "月建の仮説明です。月単位の気の中心方位として扱う想定です。"
+  },
+  {
+    "key": "nichishin",
+    "shortLabel": "(日辰)",
+    "title": "日辰",
+    "description": "日辰の仮説明です。日単位の補助指標として利用する想定です。"
+  }
+]
